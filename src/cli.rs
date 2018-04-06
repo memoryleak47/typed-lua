@@ -7,9 +7,9 @@ pub enum Mode {
 }
 
 pub struct Config {
-	inputfile: String,
-	outputfile: String,
-	mode: Mode,
+	pub inputfile: String,
+	pub outputfile: String,
+	pub mode: Mode,
 }
 
 pub fn get_config() -> Config {
