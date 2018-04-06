@@ -6,6 +6,23 @@ pub enum Mode {
 	Release
 }
 
+impl Mode {
+	#[allow(dead_code)]
+	pub fn is_release(&self) -> bool {
+		match self {
+			Mode::Release => true,
+			Mode::Debug => false,
+		}
+	}
+
+	pub fn is_debug(&self) -> bool {
+		match self {
+			Mode::Debug => true,
+			Mode::Release => false,
+		}
+	}
+}
+
 pub struct Config {
 	pub inputfile: String,
 	pub outputfile: String,

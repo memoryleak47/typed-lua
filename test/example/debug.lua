@@ -1,5 +1,5 @@
-X = function(t) return (function(t) return type(t) == "number" end)(t) and (function(x) return x == 2 end)(t) end
+function Number(t) return type(t) == "number" end
 
-function foo(x) assert(X(x))
+function foo( x)assert((Number)( x));
 	print(x)
 end

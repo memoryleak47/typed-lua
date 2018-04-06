@@ -1,5 +1,5 @@
-$ X = Num & function(x) return x == 2 end$
+function Number(t) return type(t) == "number" end
 
-function foo(x ~ X)
+function foo($Number$ x)
 	print(x)
 end

@@ -12,6 +12,7 @@ do
 			echo "SUCCESS: test/$file/$mode.lua"
 		else
 			echo "FAILURE: test/$file/$mode.lua"
+			diff "build/test/$mode/$file.lua" "test/$file/$mode.lua"
 		fi
 	done
 done
