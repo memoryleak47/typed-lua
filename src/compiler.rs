@@ -41,7 +41,7 @@ pub fn compile(s: &str, mode: &Mode) -> String {
 				if mode.is_debug() {
 					for arg in args {
 						if !arg.0.is_empty() {
-							out.push_str(&format!("assert(({})({}));", arg.0, arg.1));
+							out.push_str(&format!("assert(({0})({1}), 'variable {1:?} does not match type {0:?}');", arg.0.trim(), arg.1.trim()));
 						}
 					}
 				}
