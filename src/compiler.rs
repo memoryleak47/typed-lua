@@ -4,7 +4,7 @@ enum State {
 	Normal,
 	InType,
 	InName,
-	PreType,
+	PreArg,
 }
 
 pub fn compile(s: &str, mode: &Mode) -> String {
@@ -32,7 +32,7 @@ pub fn compile(s: &str, mode: &Mode) -> String {
 				out.push(',');
 				args.push(current_arg);
 				current_arg = (String::new(), String::new());
-				State::PreType
+				State::PreArg
 			},
 			(State::InName, ')') => {
 				out.push(')');
@@ -40,7 +40,9 @@ pub fn compile(s: &str, mode: &Mode) -> String {
 				current_arg = (String::new(), String::new());
 				if mode.is_debug() {
 					for arg in args {
-						out.push_str(&format!("assert(({})({}));", arg.0, arg.1));
+						if !arg.0.is_empty() {
+							out.push_str(&format!("assert(({})({}));", arg.0, arg.1));
+						}
 					}
 				}
 				args = Vec::new();
@@ -52,8 +54,16 @@ pub fn compile(s: &str, mode: &Mode) -> String {
 				State::InName
 			},
 
-			(State::PreType, '$') => State::InType,
-			(State::PreType, _) => State::PreType,
+			(State::PreArg, '$') => State::InType,
+			(State::PreArg, c) if c.is_whitespace() => {
+				out.push(c);
+				State::PreArg
+			}
+			(State::PreArg, c) => {
+				out.push(c);
+				current_arg.1.push(c);
+				State::InName
+			}
 		};
 	}
 

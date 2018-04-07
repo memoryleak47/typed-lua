@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cargo build || exit
+
 mkdir -p build/test/debug
 mkdir -p build/test/release
 
