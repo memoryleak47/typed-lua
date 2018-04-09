@@ -1,5 +1,6 @@
 function OfType(s) return function(o) return type(o) == s end end
 
+Nil = OfType("nil")
 Number = OfType("number")
 String = OfType("string")
 Function = OfType("function")
@@ -17,6 +18,12 @@ function And(X, Y)
 	end
 end
 
+function Not(X)
+	return function(o)
+		return not X(o)
+	end
+end
+
 function List(C)
 	return function(o)
 		if not Table(o) then return false end
@@ -30,13 +37,12 @@ function List(C)
 	end
 end
 
-function sum($List(Number)$ l)
-	s = 0
-	for _, v in pairs(l) do
-		s = s + v
-	end
-	return s
-end
+function Template(template)
+	return function(o)
+		for k, v in pairs(template) do
+			if not v(o[k]) then return false end
+		end
 
-print(sum({1, 2, 3}))
-print(sum({1, 2, "f"}))
+		return true
+	end
+end
